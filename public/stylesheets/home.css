@@ -1,0 +1,192 @@
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;  
+    font-family: 'Poppins';
+    color: #505962;
+  }
+
+/*design for landing page*/
+
+.navbar{
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .1rem;
+  }
+  
+  .navbar-dark .navbar-nav .nav-link{
+    color: #fff;
+  }
+  
+  .navbar-dark .navbar-nav .nav-link.active,
+  .navbar-dark .navbar-nav .nav-link:hover{
+    color:  #FE5F1E;
+  }
+  
+  nav li:last-child a{
+    border-radius: 20px;
+  }
+  
+  nav li:last-child a:hover{
+      background-color:#fe5f1e;
+  }
+  
+  nav li a{
+    transition: all 1s ease-in-out ;
+  }
+    
+  
+  .navbar-toggler{
+    outline:none!important;
+  }
+  
+  .has-search .form-control-feedback {
+    position: absolute;
+    margin-left: 5px;
+    line-height: 2rem;
+    text-align: center;
+    pointer-events: none;
+    color:grey;
+  }
+  
+  .home_content_area {
+    width:100%;
+    max-width: 120%;
+    padding-top: 74.6691871456%;
+    margin:0;
+    background: url(/images/homeimg.jpg) no-repeat top left;
+    background-size: cover;
+    background-attachment:fixed;
+    background-attachment:scroll;
+  }
+  
+  .caption{
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    position: absolute ;
+    text-align: center;
+    /*top: 35%;*/
+    z-index: 1;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  @media (min-width: 300px) {  
+    .caption h1 {font-size:1.5rem;} /*1rem = 16px*/
+    .caption h3 {font-size: 1rem;}
+    .caption{
+      top: 18%;}
+  }
+  
+  /*microsoft lumia*/
+  @media (min-width: 640px) {  
+    .caption h1 {font-size:1.5rem;} /*1rem = 16px*/
+    .caption h3 {font-size: 1rem;}
+    .caption{
+      top: 38%;}
+    .home_content_area {
+        width:120%;}
+  }
+  
+   
+  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+  @media (min-width: 768px) {  
+    .caption h1 {font-size:2rem;} /*1rem = 16px*/
+    .caption h3{font-size: 1.5rem;}
+    .caption{
+      top: 27%;}
+      .home_content_area {
+        width:120%;}
+  }
+
+  @media (min-width: 800px) {  
+    .caption h1 {font-size:2rem;} /*1rem = 16px*/
+    .caption h3{font-size: 1.5rem;}
+    .caption{
+      top: 22%;}
+      .home_content_area {
+        width:120%;}
+  } 
+   
+  /* Large devices (desktops, 992px and up) */
+  @media (min-width: 992px) { 
+    .caption h1 {font-size:3.5rem;} 
+    .caption h3 {font-size: 2rem;}
+    .caption{
+      width: 100%;
+      max-width: 100%;
+      position: absolute;
+      top:38%;}
+  
+  }
+  
+.caption h1{
+    color: black;
+   /* font-size: 3.8rem;*/
+    font-weight: 700;
+    letter-spacing: .3rem;
+    text-shadow: .1rem .1 rem .8 rem black;
+    padding-bottom: 1rem;
+  }
+
+  .caption h3{
+    color: black;
+    /*font-size: 2rem;*/
+    text-shadow: .1rem .1rem .5rem black;
+    padding-bottom: 1.6rem;
+  }
+  
+  .homebtn{
+    border-width: medium;
+    color: #fff;
+    background-color: black;
+    border-radius: 0;
+    padding: .6rem 1.3rem;
+    font-size: 1.1rem;
+  }
+  .homebtn:hover{
+    color: #FE5F1E;
+    text-decoration: none;
+    transition: all 1s ease-in-out;
+  }
+  /*product grid*/
+  
+  .product_block{
+    width:325px;
+    height: 500px;
+    text-align: center;
+    margin: 30px;
+  }
+  
+  .product_block img{
+    width: 300px;
+    height: 400px;
+  }
+  
+  .pr_block h2{
+    font-size: 1.5rem;
+  }
+  
+  .product-details{
+    margin-top: 10px;
+  }
+  
+  .product-btn{
+    margin-left: 10px;
+    border: 2px #FE5F1E solid;
+    color: #FE5F1E;
+    border-radius: 20px;
+    padding: 5px;
+    font-weight: 500;
+  }
+  
+  .product-btn:hover{
+    background-color: #FE5F1E;
+    color: #fff;
+    transition: all 1s ease-in-out;
+  }
+  
+  .add-to-cart{
+    padding-left: 10px;
+  }
