@@ -8,7 +8,7 @@ module.exports.connect = function(done){
     const dbname ='shopping'
     
 
-    mongoClient.connect(url,{useNewUrlParser: true, useUnifiedTopology: true},(err,data)=>{
+    mongoClient.connect(url,{ useUnifiedTopology: true },(err,data)=>{
         if(err) return done(err)
         state.db=data.db(dbname)
         done()
