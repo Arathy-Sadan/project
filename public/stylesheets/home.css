@@ -67,7 +67,6 @@ body {
     position: absolute ;
     text-align: center;
     /*top: 35%;*/
-    z-index: 1;
     color: white;
     text-transform: uppercase;
     text-align: center;
