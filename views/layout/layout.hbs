@@ -19,10 +19,10 @@
 
 </head>
 <body>
-{{#if user}}
-{{>user-header}}
-{{else}}
+{{#if admin}}
 {{>admin-header}}
+{{else}}
+{{>user-header}}
 {{/if}}
 
 {{{body}}}

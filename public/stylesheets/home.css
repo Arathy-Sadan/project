@@ -39,6 +39,34 @@ body {
   .navbar-toggler{
     outline:none!important;
   }
+
+  .dropdown button{
+    margin-left:10px ;
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .dropdown button:hover{
+    border: none;
+    color: #fe5f1e;
+    transition: all 1s ease-in-out;
+  }
+
+  .dropdown-menu{
+    background-color: rgb(39, 35, 35);
+  }
+
+  .dropdown-menu a{
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .dropdown-menu a:hover{
+    background-color: transparent;
+    transition: all 1s ease-in-out;
+    color: #fe5f1e;
+  }
   
   .has-search .form-control-feedback {
     position: absolute;
