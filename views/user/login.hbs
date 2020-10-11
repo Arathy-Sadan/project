@@ -3,6 +3,9 @@
         <div class="login p-5" >
         <h1>LOG IN</h1>
             <form action="/login" method="POST">
+            {{#if loginErr}}
+            <p style="color: red;">{{loginErr}}</p>
+            {{/if}}
                 <label for="username"><i class="fa fa-user mr-2"></i>Username</label><br>
                 <input type="text" name="Username" placeholder="Enter username"><br>
                 <label for="password"><i class="fa fa-lock mr-2"></i>Password</label><br>
