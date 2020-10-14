@@ -1,11 +1,12 @@
 var express = require('express');
 const fileUpload = require('express-fileupload');
+const { Db } = require('mongodb');
 const { render } = require('../app');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helpers');
 
 /* GET users listing. */
-router.get('', function(req, res,next) {
+router.get('/', function(req, res,next) {
   productHelpers.getAllProducts().then((products)=>{
     res.render('admin/view-products',{admin:true,products});
   })
@@ -28,6 +29,13 @@ router.post('/add-products',function(req,res){
       }
     })
  
+  })
+})
+
+router.get('/delete-product/:id',(req,res)=>{
+  let proId=req.params.id
+  productHelpers.deleteProduct(proId).then((response)=>{
+    res.redirect('/admin/')
   })
 })
 
