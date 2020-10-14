@@ -48,6 +48,7 @@ router.post('/signup',(req,res)=>{
   /*console.log(req.body)*/
   userHelpers.doSignup(req.body).then((response)=>{
     console.log(response);
+    res.redirect('/login')
   })
 })
 router.post('/login',(req,res)=>{
