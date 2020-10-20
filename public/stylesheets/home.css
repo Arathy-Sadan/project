@@ -80,6 +80,7 @@ body {
   .home_content_area {
     width:100%;
     max-width: 120%;
+    height: 100%;
     padding-top: 74.6691871456%;
     margin:0;
     background: url(/images/homeimg.jpg) no-repeat top left;

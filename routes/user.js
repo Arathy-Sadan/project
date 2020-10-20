@@ -15,13 +15,16 @@ const verifyingLogin=(req,res,next)=>{
 /* GET home page. */
 router.get('/',(req,res)=>{
   let user=req.session.user
-  console.log(user);
   res.render('user/home',{user})
+})
+
+router.get('/about',(req,res)=>{
+  let user=req.session.user
+  res.render('user/about',{user})
 })
 
 router.get('/products', function(req, res) {
   let user=req.session.user
-  console.log(user);
   productHelpers.getAllProducts().then((products)=>{
     res.render('user/view-products',{products,user});
   })
@@ -69,10 +72,17 @@ router.get('/logout',(req,res)=>{
   res.redirect('/')
 })
 
-router.get('/cart',verifyingLogin,(req,res)=>{
+router.get('/cart',verifyingLogin,async(req,res)=>{
   let user=req.session.user
-  console.log(user);
-  res.render('user/cart',{user})
+  let products=await userHelpers.getCartProducts(req.session.user._id)
+  console.log(products)
+  res.render('user/cart',{products,user})
+})
+
+router.get('/add-to-cart/:id',verifyingLogin,(req,res)=>{
+  userHelpers.addToCart(req.params.id,req.session.user._id).then(()=>{
+    res.redirect('/products')
+  })
 })
 
 module.exports = router;

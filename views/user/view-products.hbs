@@ -1,17 +1,17 @@
 <!---products-->
 <section>
-<div class="container " id="products">
+<div class="container" id="products">
     <h3 class="text-center " style="font-size: 2rem; font-weight: 700; text-transform: uppercase; color: #fe5f1e;">Products</h3>
 
-    <div class="row  " style="margin-top: 100px;">
+    <div class="row " style="margin-top: 100px;">
         {{#each products}}
-        <div class="col-md-3 p-3">
+        <div class="col-sm-6 col-md-4 col-lg-3 p-3">
             <div class="card" style="width: 15rem; height:30rem;">
             <img class="card-img-top" src="/product-images/{{this._id}}.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{this.Name}}</h5>
                 <p class="card-text">{{this.Description}}</p>
-                <a href="#" class="btn btn-primary align-items-end">Add to cart</a>
+                <a href="/add-to-cart/{{this._id}}" class="btn btn-primary align-items-end">Add to cart</a>
             </div>
             </div>
         </div>

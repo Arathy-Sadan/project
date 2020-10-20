@@ -1,5 +1,28 @@
-<div class="container">
-    <div class="row">
-        <h1 style="margin-top: 100px;">cart</h1>
+<section>
+    <div class="container" style="padding-top: 150px;">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td><img src="/product-images/{{this._id}}.jpg" style="width: 100px; height: 100px;"></td>
+                    <td>{{this.Name}}</td>
+                    <td>
+                        <button class="cart-item-count mr-3 bg-info">-</button>1<button class="cart-item-count ml-3 bg-info">+</button>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+
+        </table>
     </div>
-</div>
+</section>
