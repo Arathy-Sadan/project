@@ -3,6 +3,7 @@ var router = express.Router();
 var productHelpers = require('../helpers/product-helpers');
 const userHelpers = require('../helpers/user-helpers');
 const { response } = require('express');
+const { log } = require('handlebars');
 const verifyingLogin=(req,res,next)=>{
   if(req.session.loggedIn){
     next()
@@ -13,9 +14,13 @@ const verifyingLogin=(req,res,next)=>{
 }
 
 /* GET home page. */
-router.get('/',(req,res)=>{
-  let user=req.session.user
-  res.render('user/home',{user})
+router.get('/',async(req,res)=>{
+  let user = req.session.user
+  let cartCount = null
+  if(req.session.user){
+  cartCount = await userHelpers.getCartCount(req.session.user._id) 
+  }
+  res.render('user/home',{user,cartCount})
 })
 
 router.get('/about',(req,res)=>{
@@ -23,10 +28,14 @@ router.get('/about',(req,res)=>{
   res.render('user/about',{user})
 })
 
-router.get('/products', function(req, res) {
+router.get('/products',async function(req, res) {
   let user=req.session.user
+  let cartCount = null
+  if(req.session.user){
+  cartCount = await userHelpers.getCartCount(req.session.user._id) 
+  }
   productHelpers.getAllProducts().then((products)=>{
-    res.render('user/view-products',{products,user});
+    res.render('user/view-products',{products,user,cartCount});
   })
 
 });
@@ -79,9 +88,10 @@ router.get('/cart',verifyingLogin,async(req,res)=>{
   res.render('user/cart',{products,user})
 })
 
-router.get('/add-to-cart/:id',verifyingLogin,(req,res)=>{
+router.get('/add-to-cart/:id',(req,res)=>{
+  console.log("api call");
   userHelpers.addToCart(req.params.id,req.session.user._id).then(()=>{
-    res.redirect('/products')
+    res.json({status:true})
   })
 })
 

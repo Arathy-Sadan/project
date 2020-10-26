@@ -31,7 +31,10 @@
                 </li>
                 {{/if}}
                 <li class="nav-item" id="cart">
-                    <a href='/cart' class="nav-link inline-block px-4 py-2"><img src="/images/cart.png" alt=""></a>
+                    <a href='/cart' class="nav-link inline-block px-4 py-2">
+                        <img src="/images/cart.png" alt="">
+                        <span class="badge badge-info" id="cart-count">{{cartCount}}</span>
+                    </a>
                 </li>
             </ul>
             <div class="dropdown mb-4" >
