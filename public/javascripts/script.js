@@ -1,4 +1,4 @@
-//const { CART_COLLECTION } = require("../../config/collections")
+
 
   function addToCart(proId){
     $.ajax({

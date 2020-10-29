@@ -54,7 +54,7 @@ module.exports={
                 console.log(proExist)
                 if(proExist!=-1){
                     db.get().collection(collection.CART_COLLECTION).
-                    updateOne({'product.item':objectId(proId)},{
+                    updateOne({user:objectId(userId),'product.item':objectId(proId)},{
                         $inc:{'product.$.quantity':1}
                     }).then(()=>{
                         resolve()
@@ -101,6 +101,12 @@ module.exports={
                         foreignField: "_id",
                         as: "products"
                      }
+                },{
+                    $project:{
+                        item:1,
+                        quantity:1,
+                        products:{$arrayElemAt:['$products',0]}
+                    }
                 }
             
             ]).toArray()
@@ -120,6 +126,30 @@ module.exports={
                 count = cart.product.length
             }
             resolve(count)
+        })
+    },
+    changeProductQuantity:(details)=>{
+        details.count=parseInt(details.count)
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CART_COLLECTION).
+                    updateOne({_id:objectId(details.cart),'product.item':objectId(details.product)},{
+                        $inc:{'product.$.quantity':details.count}
+                    }).then((response)=>{
+                        console.log("hi")
+                       console.log(response)
+                        resolve()
+                    })
+        })
+    },
+    deleteCartProduct:(proId,userId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CART_COLLECTION)
+            .updateMany(
+                { "user": objectId(userId)},
+                { $pull: { "product": { "item": objectId(proId)} } }
+             )
+             .then((response)=>
+            resolve(response))
         })
     }
 }

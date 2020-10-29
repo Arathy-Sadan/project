@@ -52,7 +52,7 @@ module.exports = {
                     Description:proDetails.Description
                 }
             }).then((response)=>{
-                resolve()
+                resolve(response)
             })
 
 

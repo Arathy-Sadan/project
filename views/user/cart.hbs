@@ -5,21 +5,25 @@
                 <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Title</th>
+                    <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each products}}
                 <tr>
-                    {{#each this.products}}
-                    <td><img src="/product-images/{{this._id}}.jpg" style="width: 100px; height: 100px;"></td>
-                    <td>{{this.Name}}</td>
-                    {{/each}}
+                    <td><img src="/product-images/{{this.products._id}}.jpg" style="width: 100px; height: 100px;"></td>
+                    <td>{{this.products.Name}}</td>
+                    <td>{{this.products.Price}}</td>
                     <td>
-                        <button class="cart-item-count mr-3 bg-info">-</button>{{this.quantity}}<button class="cart-item-count ml-3 bg-info">+</button>
+
+                        <button class="cart-item-count mr-3 bg-info"  onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{this.quantity}}',-1)">
+                         -
+                        </button><span id="{{this.products._id}}" value="">{{this.quantity}}</span>
+                        <button class="cart-item-count ml-3 bg-info" onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{this.quantity}}',1)">+</button>
                     </td>
                     <td>
-                        <a href="" class="btn btn-danger">Remove</a>
+                        <a href="/delete-product/{{this.products._id}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Remove</a>
                     </td>
                 </tr>
                 {{/each}}
@@ -28,3 +32,26 @@
         </table>
     </div>
 </section>
+<script>
+    function changeQuantity(cartId,proId,quantity,count){
+        $.ajax({
+            url:'/change-product-quantity',
+            data:{
+                cart:cartId,
+                product:proId,
+                quantity:quantity,
+                count:count
+
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.status){
+                    let quantity=$('#'+proId).html()
+                    quantity =parseInt(quantity)+count
+                    $('#'+proId).html(quantity)
+
+                }
+            }
+        })
+    }
+</script>
