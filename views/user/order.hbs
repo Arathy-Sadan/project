@@ -1,0 +1,54 @@
+<section>
+    <div class="container" style="padding-top: 150px;">
+        <form action="" method="" id="checkout-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Enter delivery-details</h1>
+                        <label for="">Address</label>
+                        <input class="form-control" type="text" name="address" id="address">
+                        <label for="">Pincode</label>
+                        <input class="form-control" type="number" name="pincode" id="pincode">
+                        <label for="">Mobile</label>
+                        <input class="form-control" type="number" name="mobile" id="mobile">
+                </div>
+
+                <div class="col-md-4 payment_block">
+                    <div class="container mt-5 ml-5 checkout">
+                        <h5>Total Amount : Rs.{{total}}</h5>
+                        <br>
+                        <div class="payment">
+                            <p>Payment format</p>
+                            <label class="radio-inline">
+                                <input type="radio" name="payment-method" value="cod" id="" checked>cod
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="payment-method" value="online" id="">online-payment
+                            </label>
+                            <button class="btn btn-info mr-4 float-right" type="submit">Checkout</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+<style>
+    input[type=radio]{
+        width: 20px;
+        height: 20px;
+    }
+    label.radio-inline{
+        display: flex;
+        align-items: center;
+    }
+    .payment_block{
+        border: 2px solid;
+        border-color: black;
+    }
+
+</style>
