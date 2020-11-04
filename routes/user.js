@@ -121,4 +121,13 @@ router.get('/place-order',verifyingLogin,async(req,res)=>{
   res.render('user/order',{total,user:req.session.user,userId:req.session.user._id})
 })
 
+router.post('/place-order',async(req,res)=>{
+  console.log(req.body)
+  let products = await userHelpers.getCartProductList(req.body.userId)
+  let totalPrice = await userHelpers.getTotalAmount(req.body.userId) 
+  userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
+    res.json({status:true})
+  })
+})
+
 module.exports = router;
