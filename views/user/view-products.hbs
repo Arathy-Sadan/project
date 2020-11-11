@@ -11,8 +11,11 @@
             <div class="card-body">
                 <h5 class="card-title">{{this.Name}}</h5>
                 <p class="card-text">{{this.Description}}</p>
-                
-              <button onclick="addToCart('{{this._id}}')" class="btn btn-primary">Add to cart</button>
+                <div class="mb-2">
+                <p class="card-price">Rs.{{this.Price}}
+                   <button onclick="addToCart('{{this._id}}')" class="btn btn-primary ml-2">Add to cart</button>
+                </p>
+               </div> 
             </div>
             </div>
         </div>
