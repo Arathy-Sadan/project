@@ -2,17 +2,66 @@ var express = require('express');
 const fileUpload = require('express-fileupload');
 const { Db } = require('mongodb');
 const { render, response } = require('../app');
+const adminHelpers = require('../helpers/admin-helpers');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helpers');
+/*Admin login */
+const verifyingLogin=(req,res,next)=>{
+  if(req.session.admin){
+    next()
+  }
+  else{
+    res.redirect('/admin/logedin')
+  }
+}
+
+router.get('/signedup',(req,res)=>{
+  res.render('admin/signup')
+  })
+
+  router.post('/signedup',(req,res)=>{
+    /*console.log(req.body)*/
+    adminHelpers.doSignup(req.body).then((response)=>{
+      console.log(response);
+      req.session.admin=response
+      req.session.admin.loggedIn=true
+      res.redirect('/admin/logedin')
+    })
+  })
+
+router.get('/logedin',(req,res)=>{
+  if(req.session.admin){
+    res.redirect('/admin')
+  }else{
+    res.render('admin/login',{"loginErr":req.session.adminLoginErr,admin:true})
+    req.session.adminLoginErr=false
+  }
+    
+})
+
+router.post('/logedin',(req,res)=>{
+  console.log("12325457")
+  console.log(req.body)
+  adminHelpers.doLogin(req.body).then((response)=>{
+    if(response.status){
+      req.session.admin=response.admin
+      req.session.admin.loggedIn=true
+      res.redirect('/admin')
+    }else{
+      req.session.userLoginErr="Invalid username or password"
+      res.redirect('/admin/logedin')
+    }
+  })
+})
 
 /* GET users listing. */
-router.get('/', function(req, res,next) {
+router.get('/',verifyingLogin, function(req, res,next) {
   productHelpers.getAllProducts().then((products)=>{
     res.render('admin/view-products',{admin:true,products});
   })
 });
 
-router.get('/add-products',function(req,res){
+router.get('/add-products',verifyingLogin,function(req,res){
   res.render('admin/add-products',{admin:true});
 })
 router.post('/add-products',function(req,res){
@@ -32,13 +81,13 @@ router.post('/add-products',function(req,res){
   })
 })
 
-router.get('/delete-product/:id',(req,res)=>{
+router.get('/delete-product/:id',verifyingLogin,(req,res)=>{
   let proId=req.params.id
   productHelpers.deleteProduct(proId).then((response)=>{
     res.redirect('/admin/')
   })
 })
-router.get('/edit-product/:id',async(req,res)=>{
+router.get('/edit-product/:id',verifyingLogin,async(req,res)=>{
   let product = await productHelpers.getProductDetails(req.params.id)
   console.log(product)
   res.render('admin/edit-product',{admin:true,product})

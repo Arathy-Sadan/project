@@ -1,0 +1,18 @@
+<div class="container-fluid p-5 login-background">
+    <div class="row justify-content-center align-items-center p-5">
+        <div class="login p-5">
+        <h1>LOG IN</h1>
+            <form action="/admin/logedin" method="POST">
+            {{#if loginErr}}
+            <p style="color: red;">{{loginErr}}</p>
+            {{/if}}
+                <label for="username"><i class="fa fa-user mr-2"></i>Username</label><br>
+                <input type="text" name="Username" placeholder="Enter username"><br>
+                <label for="password"><i class="fa fa-lock mr-2"></i>Password</label><br>
+                <input type="password" name="Password" placeholder="Enter password"><br>
+                <input type="submit" value="Login" ><br>
+            </form>
+       </div> 
+    </div>
+
+</div>

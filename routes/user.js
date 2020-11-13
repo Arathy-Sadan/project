@@ -5,7 +5,7 @@ const userHelpers = require('../helpers/user-helpers');
 const { response } = require('express');
 const { log } = require('handlebars');
 const verifyingLogin=(req,res,next)=>{
-  if(req.session.loggedIn){
+  if(req.session.user){
     next()
   }
   else{
@@ -46,12 +46,12 @@ res.render('user/signup')
 
 /*get login page*/
 router.get('/login',(req,res)=>{
-  if(req.session.loggedIn){
+  if(req.session.user){
     res.redirect('/products')
     res.redirect('/products')
   }else{
-    res.render('user/login',{"loginErr":req.session.loginErr})
-    req.session.loginErr=false
+    res.render('user/login',{"loginErr":req.session.userLoginErr})
+    req.session.userLoginErr=false
   }
     
 })
@@ -60,24 +60,26 @@ router.post('/signup',(req,res)=>{
   /*console.log(req.body)*/
   userHelpers.doSignup(req.body).then((response)=>{
     console.log(response);
-    res.redirect('/login')
+    req.session.user=response
+    req.session.user.loggedIn=true
+    res.redirect('/products')
   })
 })
 router.post('/login',(req,res)=>{
   userHelpers.doLogin(req.body).then((response)=>{
     if(response.status){
-      req.session.loggedIn=true
       req.session.user=response.user
+      req.session.user.loggedIn=true
       res.redirect('/products')
     }else{
-      req.session.loginErr="Invalid username or password"
+      req.session.userLoginErr="Invalid username or password"
       res.redirect('/login')
     }
   })
 })
 
 router.get('/logout',(req,res)=>{
-  req.session.destroy()
+  req.session.user=null
   res.redirect('/')
 })
 
@@ -155,6 +157,16 @@ router.get('/view-ordered-product/:id',verifyingLogin,async(req,res)=>{
 
 router.post('/verify-payment',(req,res)=>{
   console.log(req.body)
+  userHelpers.verifyPayment(req.body).then(()=>{
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+      console.log("Payment Succesfull")
+      res.json({status:true})
+    })
+
+  }).catch((err)=>{
+    console.log(err)
+    res.json({status:false,errMsg:''})
+  })
 })
 
 module.exports = router;
