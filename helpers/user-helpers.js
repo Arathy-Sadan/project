@@ -21,6 +21,7 @@ module.exports={
         })
         
     },
+
     doLogin:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             let Loginstatus=true;
@@ -46,6 +47,7 @@ module.exports={
             }
         })
     },
+    
     addToCart:(proId,userId)=>{
         let prObj={
             item:objectId(proId),

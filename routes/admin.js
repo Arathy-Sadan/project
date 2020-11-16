@@ -64,6 +64,7 @@ router.get('/',verifyingLogin, function(req, res,next) {
 router.get('/add-products',verifyingLogin,function(req,res){
   res.render('admin/add-products',{admin:true});
 })
+
 router.post('/add-products',function(req,res){
   
    productHelpers.addProduct(req.body,(id)=>{
@@ -87,12 +88,14 @@ router.get('/delete-product/:id',verifyingLogin,(req,res)=>{
     res.redirect('/admin/')
   })
 })
+
 router.get('/edit-product/:id',verifyingLogin,async(req,res)=>{
   let product = await productHelpers.getProductDetails(req.params.id)
   console.log(product)
   res.render('admin/edit-product',{admin:true,product})
 
 })
+
 router.post('/edit-product/:id',(req,res)=>{
   let id = req.params.id
   productHelpers.updateProduct(req.params.id,req.body).then(()=>{
@@ -103,5 +106,24 @@ router.post('/edit-product/:id',(req,res)=>{
     }
   })
 })
+
+router.get('/all-orders',verifyingLogin,async(req,res)=>{
+  adminHelpers.getAllOrders().then((orders)=>{
+    res.render('admin/orders',{admin:true,orders});
+  })
+
+})
+
+router.get('/edit-orders/:id',(req,res)=>{
+  adminHelpers.changeStatus(req.params.id).then(()=>{
+    res.redirect('/admin/all-orders')
+  })
+})
+
+router.get('/view-products-ordered/:id',verifyingLogin,async(req,res)=>{
+  let products=await adminHelpers.getOrderedProducts(req.params.id)
+  res.render("user/ordered-products",{admin:true,products})
+})
+
 
 module.exports = router;

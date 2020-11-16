@@ -1,0 +1,42 @@
+<section style="padding-top:150px;">
+    <div class="container">
+        <div class="row">   
+        </div>
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">No</th>
+            <th scope="col">User</th>
+            <th scope="col">DeliveryAddress</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Pincode</th>
+            <th scope="col">Products</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Time</th>
+            <th scope="col">Status</th>
+            <th scope="col">Change Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each orders}}
+            <tr>
+            <th scope="row" class="create_index">{{@index}}</th>
+            <td>{{this.userId}}</td>
+            <td>{{this.deliveryDetails.address}}</td>
+            <td>{{this.deliveryDetails.mobile}}</td>
+            <td>{{this.deliveryDetails.pincode}}</td>
+            <td><a href="/admin/view-products-ordered/{{this._id}}" class="btn btn-info">View</a></td>
+            <td>{{this.getTotalAmount}}</td>
+            <td>{{this.date}}</td>
+            <td>{{this.status}} </td>
+            <td>
+                <a href="/admin/edit-orders/{{this._id}}" class="btn btn-info">Shipping</a>
+            </td>
+            </tr>
+            {{/each}}
+
+            
+        </tbody>
+        </table>
+    </div>   
+</section>
