@@ -125,5 +125,11 @@ router.get('/view-products-ordered/:id',verifyingLogin,async(req,res)=>{
   res.render("user/ordered-products",{admin:true,products})
 })
 
+router.get('/all-users',verifyingLogin,(req,res)=>{
+  adminHelpers.getAllUsers().then((users)=>{
+    res.render('admin/all-users',{admin:true,users})
+  })
+
+})
 
 module.exports = router;

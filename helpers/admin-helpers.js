@@ -5,6 +5,7 @@ const { ORDER_COLLECTION } = require('../config/collections')
 const { ObjectID } = require('mongodb')
 const { resource } = require('../app')
 const { response } = require('express')
+const collections = require('../config/collections')
 
 module.exports={
     doSignup:(adminData)=>{
@@ -94,6 +95,14 @@ module.exports={
             ]).toArray()
             console.log(orderedProducts)
             resolve(orderedProducts)          
+        })
+    },
+    getAllUsers:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let orders = await db.get().collection(collection.USER_COLLECTION)
+            .find().toArray()
+            console.log(orders)
+            resolve(orders)
         })
     }
 }
