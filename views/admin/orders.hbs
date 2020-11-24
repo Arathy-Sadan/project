@@ -2,10 +2,10 @@
     <div class="container">
         <div class="row">   
         </div>
-        <table class="table">
+        <table class="table" id="ordersTable">
         <thead>
-            <tr>
-            <th scope="col">No</th>
+            <tr style="color: chocolate;text-transform: uppercase;">
+           <!-- <th scope="col">No</th>-->
             <th scope="col">User</th>
             <th scope="col">DeliveryAddress</th>
             <th scope="col">Mobile</th>
@@ -20,7 +20,7 @@
         <tbody>
             {{#each orders}}
             <tr>
-            <th scope="row" class="create_index">{{@index}}</th>
+            <!--<th scope="row" class="create_index">{{@index}}</th>-->
             <td>{{this.userId}}</td>
             <td>{{this.deliveryDetails.address}}</td>
             <td>{{this.deliveryDetails.mobile}}</td>
@@ -40,3 +40,8 @@
         </table>
     </div>   
 </section>
+<script>
+    $(document).ready( function () {
+    $('#ordersTable').DataTable();
+} );
+</script>
