@@ -6,7 +6,7 @@
         <thead>
             <tr style="color: chocolate;text-transform: uppercase;">
            <!-- <th scope="col">No</th>-->
-            <th scope="col">User</th>
+            <th scope="col">Userid</th>
             <th scope="col">DeliveryAddress</th>
             <th scope="col">Mobile</th>
             <th scope="col">Pincode</th>
@@ -31,6 +31,7 @@
             <td>{{this.status}} </td>
             <td>
                 <a href="/admin/edit-orders/{{this._id}}" class="btn btn-info">Shipping</a>
+                <a href="/admin/edit-order/{{this._id}}" class="btn btn-success mt-1">Delivered</a>
             </td>
             </tr>
             {{/each}}

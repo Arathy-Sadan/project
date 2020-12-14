@@ -64,6 +64,19 @@ module.exports={
         })
 
     },
+    changeStatusTo:(id)=>{
+        console.log(id)
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).updateOne(
+                {_id:ObjectID(id)},
+                {$set:{"status":"delivered"}}
+            
+            ).then((response)=>{
+                resolve(response)
+        })
+        })
+
+    },
     getOrderedProducts:(orderId)=>{
         return new Promise(async(resolve,reject)=>{
             let orderedProducts = await db.get().collection(collection.ORDER_COLLECTION).aggregate([

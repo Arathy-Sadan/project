@@ -16,7 +16,7 @@ const verifyingLogin=(req,res,next)=>{
 }
 
 router.get('/signedup',(req,res)=>{
-  res.render('admin/signup')
+  res.render('admin/signup',{admin:true})
   })
 
   router.post('/signedup',(req,res)=>{
@@ -119,6 +119,13 @@ router.get('/edit-orders/:id',(req,res)=>{
     res.redirect('/admin/all-orders')
   })
 })
+
+router.get('/edit-order/:id',(req,res)=>{
+  adminHelpers.changeStatusTo(req.params.id).then(()=>{
+    res.redirect('/admin/all-orders')
+  })
+})
+
 
 router.get('/view-products-ordered/:id',verifyingLogin,async(req,res)=>{
   let products=await adminHelpers.getOrderedProducts(req.params.id)
