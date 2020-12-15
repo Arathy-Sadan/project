@@ -3,12 +3,12 @@
         <div class="login p-5" >
         <h3 style="font-weight: 700;">CREATE NEW ACCOUNT</h3>
             <form action="/signup" method="POST">
-                <label for="username"><i class="fa fa-user mr-2"></i>Username</label><br>
-                <input type="text" name="Username" placeholder="Enter username"><br>
+                <label for="username"><i class="fa fa-user mr-2" ></i>Username</label><br>
+                <input type="text" name="Username" placeholder="Enter username" required><br>
                 <label for="email"><i class="fa fa-envelope mr-2"></i>Email id</label><br>
-                <input type="email" name="Email" placeholder="Enter email id"><br>
+                <input type="email" name="Email" placeholder="Enter email id" required><br>
                 <label for="password"><i class="fa fa-lock mr-2"></i>Password</label><br>
-                <input type="password" name="Password" placeholder="Enter password"><br>
+                <input type="password" name="Password" placeholder="Enter password" required><br>
                 <input type="submit" value="Login" ><br>
                 <a href="/login">Already have an account?</a>
             </form>

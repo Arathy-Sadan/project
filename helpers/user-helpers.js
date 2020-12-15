@@ -278,6 +278,8 @@ module.exports={
         return new Promise((resolve,reject)=>{
             console.log(order,products,total)
             let status = order['payment-method']==='cod'?'placed':'pending'
+            let emailid =order.email
+            console.log(emailid)
             let orderObj={
                 deliveryDetails:{
                     mobile:order.mobile,
@@ -285,6 +287,7 @@ module.exports={
                     pincode:order.pincode
                 },
                 userId:objectId(order.userId),
+                email:order.email,
                 paymentMethod:order['payment-method'],
                 products:products,
                 getTotalAmount:total,
@@ -296,6 +299,32 @@ module.exports={
                 console.log("orderId:"+response.ops[0]._id)
                 resolve(response.ops[0]._id)
             })
+            if(status==='placed'){
+                var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'eshopproject2020@gmail.com',
+    pass: 'Eshop@789'
+  }
+});
+
+var mailOptions = {
+  from: 'eshopproject2020@gmail.com',
+  to: emailid,
+  subject: 'orders',
+  text: 'Orders placed successfully!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+            }
         })
 
     },
@@ -373,17 +402,48 @@ module.exports={
         })
     },
     changePaymentStatus:(orderId)=>{
-
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
             db.get().collection(collection.ORDER_COLLECTION)
             .updateOne({_id:objectId(orderId)},{
                 $set:{
                     status:'placed'
                 }
+                
             }).then(()=>{
                 resolve()
             })
+            let order= await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:objectId(orderId)})
+            console.log('To get email id')
+            console.log(order)
+            let emailid = order.email
+            var nodemailer = require('nodemailer');
+
+            var transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'eshopproject2020@gmail.com',
+                pass: 'Eshop@789'
+              }
+            });
+            
+            var mailOptions = {
+              from: 'eshopproject2020@gmail.com',
+              to: emailid,
+              subject: 'orders',
+              text: 'Orders placed successfully!'
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
         })
+        
+
+        
     }
 
 }
