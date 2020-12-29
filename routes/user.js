@@ -4,6 +4,21 @@ var productHelpers = require('../helpers/product-helpers');
 const userHelpers = require('../helpers/user-helpers');
 const { response } = require('express');
 const { log } = require('handlebars');
+const { Db } = require('mongodb');
+const forgotHelpers = require('../helpers/forgot-helpers');
+const crypto = require('crypto-js')
+var otpGenerator = require('otp-generator')
+var nodemailer = require('nodemailer');
+ 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'eshopproject2020@gmail.com',
+    pass: 'Eshop@789'
+  }
+});
+ 
+
 const verifyingLogin=(req,res,next)=>{
   if(req.session.user){
     next()
@@ -168,6 +183,56 @@ router.post('/verify-payment',(req,res)=>{
     console.log(err)
     res.json({status:false,errMsg:''})
   })
+})
+
+
+router.get('/forgotPassword',function(req,res){
+res.render('user/forgotPassword')
+})
+
+router.post('/reset-password',async function (req, res) {
+  const email = req.body.email
+  console.log(email)
+  let userdetails =await forgotHelpers.checkEmail(email) //check user details
+  console.log(userdetails)
+  if(userdetails != null){
+    let token = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+    console.log(token)
+    
+    var mailOptions = {
+      from: 'eshopproject2020@gmail.com',
+      to: email,
+      subject: 'Reset Password',
+      text: 'Otp - '+token
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    res.render('user/token',{tokenNumber:token})    
+  }
+  else{
+    res.render('user/Nouser')
+    console.log('no user  found')
+  }
+     
+})
+
+router.post('/checkOtp',(req,res)=>{
+  console.log(req.body)
+  if(req.body.token===req.body.otp){
+    console.log("valid")
+    res.render('user/Userfound')
+  }
+})
+router.post('/updatePassword',(req,res)=>{
+  forgotHelpers.changePassword(req.body).then(()=>{
+  })
+  res.redirect('/login')
 })
 
 module.exports = router;
