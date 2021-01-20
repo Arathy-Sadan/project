@@ -1,0 +1,12 @@
+<div class="row justify-content-center align-items-center p-5">
+        <div class="login p-5" >
+            <form action="/checkSignup" method="POST">
+                <label for="token"><i class="fa fa-lock mr-2"></i>Enter otp</label><br>
+                <input type="text" name="token" placeholder="Otp" required><br>
+                <input type="text" name="otp" value="{{tokenNumber}}" hidden>
+                <input type="submit" value="Submit" ><br>
+            </form>
+       </div> 
+    </div>
+
+</div>

@@ -73,12 +73,45 @@ router.get('/login',(req,res)=>{
 
 router.post('/signup',(req,res)=>{
   /*console.log(req.body)*/
-  userHelpers.doSignup(req.body).then((response)=>{
-    console.log(response);
-    req.session.user=response
-    req.session.user.loggedIn=true
-    res.redirect('/products')
-  })
+  console.log(req.body.Email)
+  const email = req.body.Email
+  let token = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+    console.log(token)
+    
+    var mailOptions = {
+      from: 'eshopproject2020@gmail.com',
+      to: email,
+      subject: 'Confirm login',
+      text: 'Otp - '+token
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    res.render('user/OTP',{tokenNumber:token})    
+    router.post('/checkSignup',(reqs,resp)=>{
+      console.log(reqs.body)
+      if(reqs.body.token===reqs.body.otp){
+        console.log("valid")
+        userHelpers.doSignup(req.body).then((response)=>{
+          console.log(response);
+          resp.redirect('/login')
+        })
+      }else{
+        resp.render('user/otpNotValid')
+      }
+    })
+
+  // userHelpers.doSignup(req.body).then((response)=>{
+  //   console.log(response);
+  //   req.session.user=response
+  //   req.session.user.loggedIn=true
+  //   res.redirect('/products')
+  // })
 })
 router.post('/login',(req,res)=>{
   userHelpers.doLogin(req.body).then((response)=>{
@@ -227,6 +260,8 @@ router.post('/checkOtp',(req,res)=>{
   if(req.body.token===req.body.otp){
     console.log("valid")
     res.render('user/Userfound')
+  }else{
+    res.render('user/otpNotValid')
   }
 })
 router.post('/updatePassword',(req,res)=>{
